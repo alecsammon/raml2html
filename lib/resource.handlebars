@@ -53,7 +53,7 @@
                                         {{#each ../../allUriParameters}}
                                             <li>
                                                 <strong>{{this.displayName}}</strong>
-                                                <em>{{this.type}}</em>
+                                                <em>({{this.type}})</em>
 
                                                 {{md description}}
                                             </li>
@@ -160,7 +160,7 @@
                                                                 example
                                                             </a>
 
-                                                            <pre class="panel-collapse collapse" id="response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">{{highlight  this.example}}</pre>
+                                                            <pre class="panel-collapse collapse" id="response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">{{highlight this.example}}</pre>
                                                         </li>
                                                     {{/if}}
 
