@@ -1,200 +1,230 @@
 <div class="panel panel-white">
-    {{#if methods}}
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a class="block collapsed" data-toggle="collapse" href="#panel_{{uniqueId}}">
-                    {{#methods}}
+{{#if methods}}
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a class="block collapsed" data-toggle="collapse" href="#panel_{{uniqueId}}">
+                {{#methods}}
+                    <span class="badge badge_{{method}}">{{method}}</span>
+                {{/methods}}
+                <span class="parent">{{parentUrl}}</span>{{relativeUri}}
+            </a>
+        </h4>
+    </div>
+    <div id="panel_{{uniqueId}}" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="list-group">
+                {{#methods}}
+                    <a href="#" data-toggle="modal" data-target="#{{../uniqueId}}_{{method}}"
+                       class="list-group-item">
                         <span class="badge badge_{{method}}">{{method}}</span>
-                    {{/methods}}
-                    <span class="parent">{{parentUrl}}</span>{{relativeUri}}
-                </a>
-            </h4>
-        </div>
-        <div id="panel_{{uniqueId}}" class="panel-collapse collapse">
-            <div class="panel-body">
-                <div class="list-group">
-                    {{#methods}}
-                        <a href="#" data-toggle="modal" data-target="#{{../uniqueId}}_{{method}}" class="list-group-item">
-                            <span class="badge badge_{{method}}">{{method}}</span>
-                            {{description}}
-                        </a>
-                    {{/methods}}
-                </div>
+                        {{description}}
+                    </a>
+                {{/methods}}
             </div>
         </div>
-    {{else}}
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <span class="parent">{{parentUrl}}</span>{{relativeUri}}
-            </h4>
-        </div>
-    {{/if}}
+    </div>
+{{else}}
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <span class="parent">{{parentUrl}}{{relativeUri}}</span>
+        </h4>
+    </div>
+{{/if}}
 
-    {{#methods}}
-        <div class="modal fade" id="{{../uniqueId}}_{{method}}">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            <span class="badge badge_{{method}}">{{method}}</span>
-                            <span class="parent">{{../parentUrl}}</span>{{../relativeUri}}
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-info">{{md description}}</div>
+{{#methods}}
+    <div class="modal fade" id="{{../uniqueId}}_{{method}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span class="badge badge_{{method}}">{{method}}</span>
+                        <span class="parent">{{../parentUrl}}</span>{{../relativeUri}}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info">{{md description}}</div>
 
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#{{../uniqueId}}_{{method}}_request" data-toggle="tab">Request</a></li>
-                            {{#if responses}}
-                                <li><a href="#{{../../uniqueId}}_{{method}}_response" data-toggle="tab">Response</a></li>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#{{../uniqueId}}_{{method}}_request"
+                                              data-toggle="tab">Request</a></li>
+                        {{#if responses}}
+                            <li><a href="#{{../../uniqueId}}_{{method}}_response" data-toggle="tab">Response</a>
+                            </li>
+                        {{/if}}
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="{{../uniqueId}}_{{method}}_request">
+                            {{#if ../allUriParameters}}
+                                <h3>URI Parameters</h3>
+                                <ul>
+                                    {{#each ../../allUriParameters}}
+                                        <li>
+                                            <strong>{{this.displayName}}</strong>
+                                            <em>({{this.type}})</em>
+
+                                            {{md description}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
                             {{/if}}
-                        </ul>
 
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="{{../uniqueId}}_{{method}}_request">
-                                {{#if ../allUriParameters}}
-                                    <h3>URI Parameters</h3>
-                                    <ul>
-                                        {{#each ../../allUriParameters}}
-                                            <li>
-                                                <strong>{{this.displayName}}</strong>
-                                                <em>({{this.type}})</em>
-
-                                                {{md description}}
-                                            </li>
-                                        {{/each}}
-                                    </ul>
-                                {{/if}}
-
-                                {{#if queryParameters}}
-                                    <h3>Query Parameters</h3>
-                                    <ul>
-                                        {{#each queryParameters}}
-                                            <li>
-                                                <strong>{{@key}}</strong>
-                                                <em>
-                                                    {{#if this.required}}
-                                                      required
-                                                    {{/if}}
-                                                    {{#if this.enum}}
-                                                      one of ({{this.enum}})
-                                                    {{else}}
-                                                      ({{this.type}})
-                                                    {{/if}}
-                                                </em>
-
-                                                {{md description}}
-
-                                                {{#if this.example}}
-                                                    <p>
-                                                        <small>
-                                                            <strong>Example:</strong>
-                                                            <code>{{this.example}}</code>
-                                                        </small>
-                                                    </p>
+                            {{#if queryParameters}}
+                                <h3>Query Parameters</h3>
+                                <ul>
+                                    {{#each queryParameters}}
+                                        <li>
+                                            <strong>{{@key}}</strong>
+                                            <em>
+                                                {{#if this.required}}
+                                                    required
                                                 {{/if}}
-                                            </li>
-                                        {{/each}}
-                                    </ul>
-                                {{/if}}
+                                                {{#if this.enum}}
+                                                    one of ({{this.enum}})
+                                                {{else}}
+                                                    ({{this.type}})
+                                                {{/if}}
+                                            </em>
 
-                                {{#if body}}
+                                            {{md description}}
 
-                                    <strong>Body</strong>
+                                            {{#if this.example}}
+                                                <p>
+                                                    <small>
+                                                        <strong>Example:</strong>
+                                                        <code>{{this.example}}</code>
+                                                    </small>
+                                                </p>
+                                            {{/if}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            {{/if}}
+
+                            {{#if body}}
+
+                                <strong>Body</strong>
                                 <ul>
                                     {{#each body}}
                                         <li>
-                                        <em>{{@key}}</em>
+                                            <em>{{@key}}</em>
                                             <ul>
-                                        {{#if this.example}}
-                                            <li>
-                                            <a data-toggle="collapse" href="#request-example{{hash ../../../../uniqueId ../../../method @key}}">
-                                                example
-                                            </a>
+                                                {{#if this.example}}
+                                                    <li>
+                                                        <a data-toggle="collapse"
+                                                           href="#request-example{{hash ../../../../uniqueId ../../../method @key}}">
+                                                            example
+                                                        </a>
 
-                                            <pre class="panel-collapse collapse" id="request-example-{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.example}}</pre>
-                                            </li>
-                                        {{/if}}
+                                                            <pre class="panel-collapse collapse"
+                                                                 id="request-example{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.example}}</pre>
+                                                    </li>
+                                                {{/if}}
 
-                                        {{#if this.schema}}
-                                            <li>
-                                            <a data-toggle="collapse" href="#request-schema-{{hash ../../../../uniqueId ../../../method @key}}">
-                                                schema
-                                            </a>
+                                                {{#if this.schema}}
+                                                    <li>
+                                                        <a data-toggle="collapse"
+                                                           href="#request-schema-{{hash ../../../../uniqueId ../../../method @key}}">
+                                                            schema
+                                                        </a>
 
-                                            <pre class="panel-collapse collapse" id="request-schema-{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.schema}}</pre>
-                                        </li>
-                                        {{/if}}
+                                                            <pre class="panel-collapse collapse"
+                                                                 id="request-schema-{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.schema}}</pre>
+                                                    </li>
+                                                {{/if}}
                                             </ul>
                                         </li>
                                     {{/each}}
-                                    </ul>
-                                {{/if}}
-                            </div>
-
-                            {{#if responses}}
-                                <div class="tab-pane" id="{{../../uniqueId}}_{{method}}_response">
-
-
-                                    {{#each responses}}
-
-                                        <h2><a href="http://httpstatus.es/{{@key}}">{{@key}}</a></h2>
-                                        {{md this.description}}
-
-
-                                        {{#if this.headers}}
-                                            <strong>Headers</strong>
-                                            <ul>
-                                                {{#each this.headers}}
-                                                    <li><strong>{{@key}}</strong>: {{this.type}}</li>
-                                                {{/each}}
-                                            </ul>
-                                        {{/if}}
-
-
-                                        {{#if this.body}}
-                                            <strong>Body</strong>
-                                            <ul>
-                                            {{#each this.body}}
-                                                <li>
-                                                <em>{{@key}}</em>
-                                                    <ul>
-                                                    {{#if this.example}}
-                                                    <li>
-                                                            <a data-toggle="collapse" href="#response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                example
-                                                            </a>
-
-                                                            <pre class="panel-collapse collapse" id="response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">{{highlight this.example}}</pre>
-                                                        </li>
-                                                    {{/if}}
-
-                                                    {{#if this.schema}}
-                                                    <li>
-                                                            <a data-toggle="collapse" href="#response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                schema
-                                                            </a>
-
-                                                            <pre class="panel-collapse collapse" id="response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">{{highlight this.schema}}</pre>
-                                                        </li>
-                                                    {{/if}}
-                                                        </ul>
-                                            </li>
-                                            {{/each}}
-                                            </ul>
-                                        {{/if}}
-                                    {{/each}}
-                                </div>
+                                </ul>
                             {{/if}}
                         </div>
+
+                        {{#if responses}}
+                            <div class="tab-pane" id="{{../../uniqueId}}_{{method}}_response">
+
+
+                                {{#each responses}}
+
+                                    <h2><a href="http://httpstatus.es/{{@key}}">{{@key}}</a></h2>
+                                    {{md this.description}}
+
+
+                                    {{#if this.headers}}
+                                        <strong>Headers</strong>
+                                        <ul>
+                                            {{#each this.headers}}
+                                                <li><strong>{{@key}}</strong>: {{this.type}}</li>
+                                            {{/each}}
+                                        </ul>
+                                    {{/if}}
+
+
+                                    {{#if this.body}}
+                                        <ul>
+                                            {{#each this.body}}
+                                                <li>
+                                                    <h5>{{@key}}</h5>
+
+                                                    <ul class="panel-group"
+                                                        id="acc-{{hash ../../../../../uniqueId ../../../method }}">
+                                                        {{#if this.example}}
+                                                            <li class="panel">
+                                                                <div class="panel-heading">
+                                                                    <h3 class="panel-title">
+                                                                        <a data-toggle="collapse"
+                                                                           data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method }}"
+                                                                           href="#response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">
+                                                                            example
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+
+                                                                <div class="panel-collapse collapse"
+                                                                     id="response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">
+                                                                        <pre class="panel-body">
+                                                                            {{highlight this.example}}
+                                                                        </pre>
+                                                                </div>
+                                                            </li>
+                                                        {{/if}}
+
+                                                        {{#if this.schema}}
+                                                            <li class="panel">
+                                                                <div class="panel-heading">
+                                                                    <h6 class="panel-title">
+                                                                        <a data-toggle="collapse"
+                                                                           data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method }}"
+                                                                           href="#response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">
+                                                                            schema
+                                                                        </a>
+                                                                    </h6>
+                                                                </div>
+
+                                                                <div class="panel-collapse collapse"
+                                                                     id="response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">
+                                                                            <pre class="panel-body">
+                                                                                {{highlight this.schema}}
+                                                                            </pre>
+                                                                </div>
+                                                            </li>
+                                                        {{/if}}
+                                                    </ul>
+                                                </li>
+                                            {{/each}}
+                                        </ul>
+                                    {{/if}}
+                                {{/each}}
+                            </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>
         </div>
-    {{/methods}}
+    </div>
+{{/methods}}
 </div>
 
 {{#resources}}
