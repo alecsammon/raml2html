@@ -1,26 +1,34 @@
 <div class="panel panel-white">
-    <div class="panel-heading">
-        <h4 class="panel-title">
-            <a class="block collapsed" data-toggle="collapse" href="#panel_{{uniqueId}}">
-                {{#methods}}
-                    <span class="badge badge_{{method}}">{{method}}</span>
-                {{/methods}}
-                <span class="parent">{{parentUrl}}</span>{{relativeUri}}
-            </a>
-        </h4>
-    </div>
-    <div id="panel_{{uniqueId}}" class="panel-collapse collapse">
-        <div class="panel-body">
-            <div class="list-group">
-                {{#methods}}
-                    <a href="#" data-toggle="modal" data-target="#{{../uniqueId}}_{{method}}" class="list-group-item">
+    {{#if methods}}
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a class="block collapsed" data-toggle="collapse" href="#panel_{{uniqueId}}">
+                    {{#methods}}
                         <span class="badge badge_{{method}}">{{method}}</span>
-                        {{description}}
-                    </a>
-                {{/methods}}
+                    {{/methods}}
+                    <span class="parent">{{parentUrl}}</span>{{relativeUri}}
+                </a>
+            </h4>
+        </div>
+        <div id="panel_{{uniqueId}}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <div class="list-group">
+                    {{#methods}}
+                        <a href="#" data-toggle="modal" data-target="#{{../uniqueId}}_{{method}}" class="list-group-item">
+                            <span class="badge badge_{{method}}">{{method}}</span>
+                            {{description}}
+                        </a>
+                    {{/methods}}
+                </div>
             </div>
         </div>
-    </div>
+    {{else}}
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <span class="parent">{{parentUrl}}</span>{{relativeUri}}
+            </h4>
+        </div>
+    {{/if}}
 
     {{#methods}}
         <div class="modal fade" id="{{../uniqueId}}_{{method}}">

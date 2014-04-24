@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>{{title}} API documentation</title>
+    <title>{{title}} documentation</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
@@ -102,7 +102,7 @@
         <div class="row">
             <div class="col-md-9" role="main">
                 <div class="page-header">
-                    <h1>{{title}} API documentation <small>version {{version}}</small></h1>
+                    <h1>{{title}} documentation <small>version {{version}}</small></h1>
                     <p>{{baseUri}}</p>
 
                     {{#documentation}}
@@ -114,7 +114,14 @@
                 {{#resources}}
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 id="{{uniqueId}}" class="panel-title">{{relativeUri}}</h3>
+                            <h3 id="{{uniqueId}}" class="panel-title">
+                                {{#if displayName}}
+                                    {{displayName}}
+                                {{else}}
+                                    {{uriToName relativeUri}}
+                                {{/if}}
+                                <em class="pull-right">{{relativeUri}}</em>
+                            </h3>
                         </div>
 
                         <div class="panel-body">
