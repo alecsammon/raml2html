@@ -13,14 +13,17 @@
         .parent {
             color: #999;
         }
+
         .list-group-item > .badge {
             float: none;
             margin-right: 6px;
         }
+
         .panel-title > .block > .badge {
             float: right;
             margin-left: 5px;
         }
+
         .badge {
             border-radius: 0;
             text-transform: uppercase;
@@ -29,65 +32,83 @@
             color: #f3f3f6;
             line-height: normal;
         }
+
         .block .badge {
             visibility: hidden;
         }
+
         .block.collapsed .badge {
             visibility: visible;
         }
+
         .badge_get {
             background-color: #63a8e2;
         }
+
         .badge_post {
             background-color: #6cbd7d;
         }
+
         .badge_put {
             background-color: #22bac4;
         }
+
         .badge_delete {
             background-color: #d26460;
         }
+
         .block {
             display: block;
         }
+
         .list-group, .panel-group {
             margin-bottom: 0;
         }
-        .panel-group .panel+.panel-white {
+
+        .panel-group .panel + .panel-white {
             margin-top: 0;
         }
+
         .panel-group .panel-white {
             border-bottom: 1px solid #F5F5F5;
             border-radius: 0;
         }
+
         .panel-white:last-child {
             border-bottom-color: white;
             -webkit-box-shadow: none;
             box-shadow: none;
         }
-        .panel-white .panel-heading {
+
+        .panel-white > .panel-heading {
             background: white;
         }
+
         .tab-pane ul {
             padding-left: 2em;
         }
+
         .tab-pane h2 {
             font-size: 1.2em;
             padding-bottom: 4px;
             border-bottom: 1px solid #ddd;
         }
+
         .tab-pane h3 {
             font-size: 1.1em;
         }
+
         .tab-content {
             border-left: 1px solid #ddd;
             border-right: 1px solid #ddd;
             border-bottom: 1px solid #ddd;
             padding: 10px;
         }
+
         #sidebar {
             margin-top: 30px;
         }
+
         .resource-description {
             border-bottom: 1px solid #ddd;
             background: #fcfcfc;
@@ -98,57 +119,59 @@
 </head>
 
 <body data-spy="scroll" data-target="#sidebar">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-9" role="main">
-                <div class="page-header">
-                    <h1>{{title}} Documentation <small>version {{version}}</small></h1>
-                    <p>{{baseUri}}</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9" role="main">
+            <div class="page-header">
+                <h1>{{title}} Documentation
+                    <small>version {{version}}</small>
+                </h1>
+                <p>{{baseUri}}</p>
 
-                    {{#documentation}}
-                        <h3>{{title}}</h3>
-                        {{md content}}
-                    {{/documentation}}
-                </div>
-
-                {{#resources}}
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 id="{{uniqueId}}" class="panel-title">
-                                {{#if displayName}}
-                                    {{displayName}}
-                                {{else}}
-                                    {{uriToName relativeUri}}
-                                {{/if}}
-                                <em class="pull-right">{{relativeUri}}</em>
-                            </h3>
-                        </div>
-
-                        <div class="panel-body">
-                            {{#if description}}
-                                <div class="resource-description">
-                                    {{md description}}
-                                </div>
-                            {{/if}}
-
-                            <div class="panel-group">
-                                {{> resource}}
-                            </div>
-                        </div>
-                    </div>
-                {{/resources}}
+                {{#documentation}}
+                    <h3>{{title}}</h3>
+                    {{md content}}
+                {{/documentation}}
             </div>
 
-            <div class="col-md-3">
-                <div id="sidebar" class="hidden-print affix" role="complementary">
-                    <ul class="nav nav-pills nav-stacked">
-                        {{#resources}}
-                            <li><a href="#{{uniqueId}}">{{relativeUri}}</a></li>
-                        {{/resources}}
-                    </ul>
+            {{#resources}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 id="{{uniqueId}}" class="panel-title">
+                            {{#if displayName}}
+                                {{displayName}}
+                            {{else}}
+                                {{uriToName relativeUri}}
+                            {{/if}}
+                            <em class="pull-right">{{relativeUri}}</em>
+                        </h3>
+                    </div>
+
+                    <div class="panel-body">
+                        {{#if description}}
+                            <div class="resource-description">
+                                {{md description}}
+                            </div>
+                        {{/if}}
+
+                        <div class="panel-group">
+                            {{> resource}}
+                        </div>
+                    </div>
                 </div>
+            {{/resources}}
+        </div>
+
+        <div class="col-md-3">
+            <div id="sidebar" class="hidden-print affix" role="complementary">
+                <ul class="nav nav-pills nav-stacked">
+                    {{#resources}}
+                        <li><a href="#{{uniqueId}}">{{relativeUri}}</a></li>
+                    {{/resources}}
+                </ul>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>

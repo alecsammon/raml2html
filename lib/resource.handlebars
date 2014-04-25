@@ -105,40 +105,60 @@
                             {{/if}}
 
                             {{#if body}}
-
-                                <strong>Body</strong>
-                                <ul>
+                                <hr />
+                                <div class="panel-group">
                                     {{#each body}}
-                                        <li>
-                                            <em>{{@key}}</em>
-                                            <ul>
-                                                {{#if this.example}}
-                                                    <li>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            {{@key}}
+                                        </div>
+
+                                    <div class="panel-body">
+
+                                        <div class="panel-group"
+                                             id="acc-{{hash ../../../../uniqueId ../../../method @key}}">
+                                            {{#if this.example}}
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
                                                         <a data-toggle="collapse"
-                                                           href="#request-example{{hash ../../../../uniqueId ../../../method @key}}">
+                                                           data-parent="#acc-{{hash ../../../../../uniqueId ../../../method @key}}"
+                                                           href="#request-example{{hash ../../../../../uniqueId ../../../method @key}}">
                                                             example
                                                         </a>
+                                                    </div>
 
-                                                            <pre class="panel-collapse collapse"
-                                                                 id="request-example{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.example}}</pre>
-                                                    </li>
-                                                {{/if}}
+                                                    <div class="panel-collapse collapse"
+                                                         id="request-example{{hash ../../../../../uniqueId ../../../method @key}}">
+                                                        <div class="panel-body">
+                                                            <pre>{{highlight this.example}}</pre>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {{/if}}
 
-                                                {{#if this.schema}}
-                                                    <li>
+                                            {{#if this.schema}}
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
                                                         <a data-toggle="collapse"
-                                                           href="#request-schema-{{hash ../../../../uniqueId ../../../method @key}}">
+                                                           data-parent="#acc-{{hash ../../../../../uniqueId ../../../method @key}}"
+                                                           href="#request-schema{{hash ../../../../../uniqueId ../../../method @key}}">
                                                             schema
                                                         </a>
+                                                    </div>
 
-                                                            <pre class="panel-collapse collapse"
-                                                                 id="request-schema-{{hash ../../../../uniqueId ../../../method @key}}">{{highlight this.schema}}</pre>
-                                                    </li>
-                                                {{/if}}
-                                            </ul>
-                                        </li>
+                                                    <div class="panel-collapse collapse"
+                                                         id="request-schema{{hash ../../../../../uniqueId ../../../method @key}}">
+                                                        <div class="panel-body">
+                                                            <pre>{{highlight this.schema}}</pre>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {{/if}}
+                                        </div>
+                                            </div>
+                                        </div>
                                     {{/each}}
-                                </ul>
+                                </div>
                             {{/if}}
                         </div>
 
@@ -148,9 +168,12 @@
 
                                 {{#each responses}}
 
-                                    <h2><a href="http://httpstatus.es/{{@key}}">{{@key}}</a></h2>
+                                    <h2><a data-toggle="collapse" href="#request-schema{{hash ../../../uniqueId ../method @key}}">{{@key}}</a></h2>
                                     {{md this.description}}
 
+                                    {{setValue 'key' @key}}
+
+                                    <div class="panel-collapse collapse" id="request-schema{{hash ../../../uniqueId ../method @key}}">
 
                                     {{#if this.headers}}
                                         <strong>Headers</strong>
@@ -163,59 +186,61 @@
 
 
                                     {{#if this.body}}
-                                        <ul>
+                                        <div class="panel-group">
                                             {{#each this.body}}
-                                                <li>
-                                                    <h5>{{@key}}</h5>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                            {{@key}}
+                                                    </div>
 
-                                                    <ul class="panel-group"
-                                                        id="acc-{{hash ../../../../../uniqueId ../../../method }}">
-                                                        {{#if this.example}}
-                                                            <li class="panel">
-                                                                <div class="panel-heading">
-                                                                    <h3 class="panel-title">
-                                                                        <a data-toggle="collapse"
-                                                                           data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method }}"
-                                                                           href="#response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                            example
-                                                                        </a>
-                                                                    </h3>
-                                                                </div>
+                                                    <div class="panel-body">
 
-                                                                <div class="panel-collapse collapse"
-                                                                     id="response-example{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                        <pre class="panel-body">
-                                                                            {{highlight this.example}}
-                                                                        </pre>
-                                                                </div>
-                                                            </li>
-                                                        {{/if}}
+                                                        <div class="panel-group"
+                                                             id="acc-{{hash ../../../../../uniqueId ../../../method ../../key @key}}">
+                                                            {{#if this.example}}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}"
+                                                                               href="#response-example{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}">
+                                                                               example
+                                                                            </a>
+                                                                    </div>
 
-                                                        {{#if this.schema}}
-                                                            <li class="panel">
-                                                                <div class="panel-heading">
-                                                                    <h6 class="panel-title">
-                                                                        <a data-toggle="collapse"
-                                                                           data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method }}"
-                                                                           href="#response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                            schema
-                                                                        </a>
-                                                                    </h6>
+                                                                    <div class="panel-collapse collapse"
+                                                                         id="response-example{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}">
+                                                                        <div class="panel-body">
+                                                                            <pre>{{highlight this.example}}</pre>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
+                                                            {{/if}}
 
-                                                                <div class="panel-collapse collapse"
-                                                                     id="response-schema{{hash ../../../../../../uniqueId ../../../../method @key}}">
-                                                                            <pre class="panel-body">
-                                                                                {{highlight this.schema}}
-                                                                            </pre>
+                                                            {{#if this.schema}}
+                                                                <div class="panel panel-default">
+                                                                    <div class="panel-heading">
+                                                                            <a data-toggle="collapse"
+                                                                               data-parent="#acc-{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}"
+                                                                               href="#response-schema{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}">
+                                                                                schema
+                                                                            </a>
+                                                                    </div>
+
+                                                                    <div class="panel-collapse collapse"
+                                                                         id="response-schema{{hash ../../../../../../uniqueId ../../../../method ../../../key @key}}">
+                                                                        <div class="panel-body">
+                                                                            <pre>{{highlight this.schema}}</pre>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </li>
-                                                        {{/if}}
-                                                    </ul>
-                                                </li>
+                                                            {{/if}}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             {{/each}}
-                                        </ul>
+                                        </div>
                                     {{/if}}
+                                    </div>
                                 {{/each}}
                             </div>
                         {{/if}}
